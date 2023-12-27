@@ -19,4 +19,9 @@ export class MovieController {
   async createMovie() {
     return await this.movieService.createMovie();
   }
+
+  @Get('all')
+  async getMovies() {
+    return await this.movieService.getMovies();
+  }
 }

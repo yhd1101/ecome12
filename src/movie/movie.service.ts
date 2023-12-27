@@ -6,6 +6,7 @@ import { Movie } from './entities/movie.entity';
 import { Repository } from 'typeorm';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class MovieService {
@@ -37,5 +38,14 @@ export class MovieService {
       await this.movieRepository.delete({});
       return await this.movieRepository.save(movieData);
     }
+  }
+  async getMovies() {
+    return await this.movieRepository.find();
+  }
+  @Cron('1 * * * * *') //10초마다 로그 =>구독,결제 시 사용많이함 (정기결제같은거 **)
+  handleCron() {
+    console.log('$$$$$$');
+    this.createMovie();
+    // this.logger.debug('cron logger');
   }
 }
