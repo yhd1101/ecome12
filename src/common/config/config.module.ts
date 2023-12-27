@@ -11,6 +11,9 @@ import * as Joi from '@hapi/joi';
         POSTGRES_USERNAME: Joi.string().required(),
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
+
+        MOVIE_URL: Joi.string().required(),
+        MOVIE_TOKEN: Joi.string().required(),
       }),
     }),
   ],
