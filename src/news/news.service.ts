@@ -3,6 +3,7 @@ import { exec } from 'child_process';
 import { News } from './entities/news.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class NewsService {
@@ -19,6 +20,8 @@ export class NewsService {
           title: item.title,
           desc: item.desc,
         }));
+
+        await this.newsRepository.delete({});
 
         // 데이터베이스에 저장
         const savedEntities = await this.newsRepository.save(newsData);
@@ -55,5 +58,12 @@ export class NewsService {
       title,
       desc: newsDescriptions[index],
     }));
+  }
+
+  @Cron('1 * * * * *') //10초마다 로그 =>구독,결제 시 사용많이함 (정기결제같은거 **)
+  handleCron() {
+    console.log('#####');
+    this.getNews();
+    // this.logger.debug('cron logger');
   }
 }
